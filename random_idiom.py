@@ -4,7 +4,7 @@
 "Learned" means the card has left the new queue and is not suspended.
 Anki must be running with the AnkiConnect add-on installed.
 
-Prints a JSON list of {phrase, definition, example}.
+Prints a JSON list of {phrase, definition}.
 
 Examples:
     ./random_idiom.py           # one random learned idiom
@@ -64,7 +64,6 @@ def main():
         idioms.append({
             "phrase": fields.get("Phrase/Idiom", ""),
             "definition": fields.get("Definition", ""),
-            "example": fields.get("Example", ""),
         })
     print(json.dumps(idioms, ensure_ascii=False, indent=2))
 
