@@ -40,7 +40,7 @@ reason; a garbled form of a real idiom is accepted and corrected.
 Idioms are fetched ten at a time, so there is no pause between your answer and the next
 situation. The batch does pass through the terminal on the way in — don't go expanding that tool
 output and you will not spoil yourself. Prompt suggestions are switched off for this project in
-`.claude/settings.local.json`, because the suggestion box will otherwise offer you the answer
+`.claude/settings.json`, because the suggestion box will otherwise offer you the answer
 before you have typed anything.
 
 ## random_idiom.py

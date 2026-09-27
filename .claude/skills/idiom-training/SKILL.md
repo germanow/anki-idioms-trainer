@@ -24,7 +24,7 @@ from memory — the point is to drill *their* deck.
 The batch lands in the conversation, which means it is also in the user's scrollback. That is
 fine as long as nothing in your own replies gives an upcoming idiom away — but it does mean the
 drill relies on `promptSuggestionEnabled: false` (set in this project's
-`.claude/settings.local.json`). If the user turns suggestions back on, warn them that the
+`.claude/settings.json`). If the user turns suggestions back on, warn them that the
 suggestion box can hand them the answer, and offer to go back to keeping the batch on disk.
 
 Work through the batch in order, then fetch the next one.
