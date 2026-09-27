@@ -48,15 +48,14 @@ before you have typed anything.
 The skill's source of idioms, also usable on its own:
 
 ```bash
-./random_idiom.py                        # one random learned idiom
-./random_idiom.py -n 5 --full            # five, with definition and stats
-./random_idiom.py --mature               # only cards with interval >= 21 days
-./random_idiom.py --deck 'Idioms and Phrases::Tier 1' --json
+./random_idiom.py           # one random learned idiom
+./random_idiom.py -n 10     # ten of them
 ```
 
-"Learned" means the card has left the new queue and is not suspended, regardless of due date.
-It expects notes with `Phrase/Idiom`, `Definition` and `Example` fields in the
-`Idioms and Phrases` deck; `--deck` overrides that. `--help` lists the rest.
+It prints a JSON list of `{phrase, definition, example}`. "Learned" means the card has left the
+new queue and is not suspended, regardless of due date. It expects notes with `Phrase/Idiom`,
+`Definition` and `Example` fields in the `Idioms and Phrases` deck, set as `DECK` at the top of
+the script.
 
 ## Rough edges
 

@@ -15,7 +15,7 @@ Fetch ten at a time, so the drill itself runs with zero tool calls between an an
 next situation:
 
 ```bash
-./random_idiom.py -n 10 --full --json
+./random_idiom.py -n 10
 ```
 
 If AnkiConnect is unreachable, tell the user to open Anki and stop. Do not fall back to idioms
