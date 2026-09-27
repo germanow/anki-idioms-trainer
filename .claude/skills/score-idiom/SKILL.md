@@ -47,21 +47,30 @@ Keep it to one compact message, in this order:
    reaching past, a register they lean on. Skip it rather than manufacture a pattern from two
    rounds.
 
-Example shape:
+## Formatting
 
-```
+Same convention as the drill: the terminal renders markdown, so that is the only colour
+available — never emit raw ANSI escapes. **Every idiom goes in backticks**, including the one the
+user said instead and the garbled form you are correcting, so the review list reads as a column
+of coloured idioms with plain glosses beside them. Section names are bold, glosses are plain, and
+the whole summary is ordinary markdown, not a code block — a fenced block renders monochrome and
+throws away the colour.
+
+Example shape, written out as markdown:
+
+````
 14 rounds — 9 right, 3 wrong, 2 passed.
 
-Could not recall
-  cut to the chase — get to the point, skipping the preamble (you said "spill the beans")
-  a blessing in disguise — something bad that turns out well
-  up in the arms — passed
+**Could not recall**
+- `cut to the chase` — get to the point, skipping the preamble (you said `spill the beans`)
+- `a blessing in disguise` — something bad that turns out well
+- `up in arms` — passed
 
-Shaky form
-  "a hot potato" — the idiom is just "hot potato"
+**Shaky form**
+- `a hot potato` — the idiom is just `hot potato`
 
 The misses are all about timing and sequence — worth a pass through those cards.
-```
+````
 
 No praise, no grading scale, no encouragement padding. The counts and the list are the whole
 point.

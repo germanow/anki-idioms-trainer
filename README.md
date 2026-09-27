@@ -26,14 +26,20 @@ an hour before he goes on leave. What do you call what he just handed you?
 
 > a hot potato
 
-Fits. Slight form note: usually "a hot potato" is what it is, and you'd
-say he "passed the buck" for what he did.
-Drawn: hot potato — an issue nobody wants responsibility for.
+Fits. For what he did, you'd say he passed the buck.
+
+hot potato — an issue nobody wants responsibility for.
+"The parking policy has been a hot potato since the new building opened."
 Also works: pass the buck · leave someone holding the baby
 
-Next: your friend has been talking up a business plan for months but
-has still not registered the company or spoken to a single customer...
+Your friend has been talking up a business plan for months but has still
+not registered the company or spoken to a single customer...
 ```
+
+In the terminal the idioms themselves are colour-highlighted and the example sentence is
+italicised, so you can scan a reply for the phrases without reading the prose around them. The
+situation is left unmarked on purpose — highlighting a phrase inside it would hint at the wording
+you are meant to come up with.
 
 Your answer does not have to match the idiom that was drawn. If it fits the situation it
 counts — the goal is range, not guessing a specific card. Wrong-fit answers get a one-line
