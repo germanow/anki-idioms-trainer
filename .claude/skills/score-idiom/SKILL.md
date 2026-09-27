@@ -1,6 +1,7 @@
 ---
 name: score-idiom
 description: Summarize an idiom drill — count right/wrong/passed answers and list the idioms the user could not recall, with glosses to review. Use at the end of a /practice-idiom session, when the user says stop, or when they ask for a score, results, recap, or summary of how the drill went.
+model: claude-sonnet-5
 ---
 
 # Idiom drill summary
