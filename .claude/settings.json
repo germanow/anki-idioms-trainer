@@ -1,4 +1,5 @@
 {
   "promptSuggestionEnabled": false,
-  "awaySummaryEnabled": false
+  "awaySummaryEnabled": false,
+  "showTurnDuration": false
 }
