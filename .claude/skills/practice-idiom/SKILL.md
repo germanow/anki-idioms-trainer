@@ -1,7 +1,6 @@
 ---
 name: practice-idiom
 description: Drill the user's learned Anki idioms by presenting situations they must respond to with a fitting idiom. Use when the user wants to practice, train, or be quizzed on idioms, or invokes /practice-idiom. Judges whether their idiom fits the situation rather than whether it matches the hidden target.
-model: claude-sonnet-5
 ---
 
 # Idiom training
