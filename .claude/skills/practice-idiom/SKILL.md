@@ -49,6 +49,18 @@ transparent near-synonym. The situation should make the *meaning* obvious while 
 
 Never number the rounds as if out of a fixed total, and keep each situation self-contained.
 
+## Giving a hint
+
+If the user replies "hint", give one line that points at the target idiom's imagery — the
+picture the phrase paints — and nothing else: no verdict, no next situation. For `hot potato`,
+something like "think of a vegetable too hot to hold". Do not use any content word of the idiom,
+its first letters, or its word count; the hint should rebuild the link from meaning to phrase,
+not turn recall into a word puzzle.
+
+One hint per situation. On a second request, say there is only one and wait for an answer or a
+pass. An answer after a hint is judged as usual; any fitting idiom still counts, not just the
+target.
+
 ## Judging an answer
 
 The goal is overall idiomatic range, not hitting the exact card. So:
@@ -101,7 +113,8 @@ company or spoken to a single customer.
 
 ## Keeping it quick
 
-Every reply after an answer has the same shape, in this order, marked up as described above:
+A hint is a single line on its own. Every reply after an answer has the same shape, in this
+order, marked up as described above:
 
 1. One or two lines of verdict on their idiom.
 2. The target with its gloss and example sentence, then the alternatives, compact.

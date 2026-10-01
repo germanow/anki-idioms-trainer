@@ -1,6 +1,6 @@
 ---
 name: score-idiom
-description: Summarize an idiom drill — count right/wrong/passed answers and list the idioms the user could not recall, with glosses to review. Use at the end of a /practice-idiom session, when the user says stop, or when they ask for a score, results, recap, or summary of how the drill went.
+description: Summarize an idiom drill — count right/hinted/wrong/passed answers and list the idioms the user could not recall, with glosses to review. Use at the end of a /practice-idiom session, when the user says stop, or when they ask for a score, results, recap, or summary of how the drill went.
 ---
 
 # Idiom drill summary
@@ -28,19 +28,22 @@ empty scoreboard.
 
 Each answered round goes in exactly one:
 
-- **Right** — their idiom fit the situation. This includes an answer that was not the drawn
-  target, one you confirmed but flagged for register or strength, and a real idiom whose form you
-  corrected. The drill scores fit, not card-matching, so all of those are hits.
-- **Wrong** — their idiom did not fit: wrong meaning, wrong polarity, wrong context.
-- **Passed** — they passed, drew a blank, or asked to be told.
+- **Right** — their idiom fit the situation, with no hint. This includes an answer that was not
+  the drawn target, one you confirmed but flagged for register or strength, and a real idiom
+  whose form you corrected. The drill scores fit, not card-matching, so all of those are hits.
+- **Hinted** — their idiom fit, but only after they asked for a hint.
+- **Wrong** — their idiom did not fit: wrong meaning, wrong polarity, wrong context. A hint
+  beforehand does not change the bucket.
+- **Passed** — they passed, drew a blank, or asked to be told, with or without a hint.
 
 ## The summary
 
 Keep it to one compact message, in this order:
 
-1. One line of score: total rounds, then right / wrong / passed.
-2. **Could not recall** — every wrong and passed round, one line each: the target idiom, a short
-   gloss, and for a wrong answer what they said instead. These are the review list.
+1. One line of score: total rounds, then right / hinted / wrong / passed. Leave out hinted if
+   no hints were used.
+2. **Could not recall** — every hinted, wrong and passed round, one line each: the target idiom,
+   a short gloss, and for a wrong answer what they said instead. These are the review list.
 3. **Shaky form** — only if there were any: idioms they reached for correctly but garbled, with
    the right form. One line each.
 4. One closing line: what the pattern says, if there is one worth saying — a meaning they keep
@@ -59,11 +62,12 @@ throws away the colour.
 Example shape, written out as markdown:
 
 ````
-14 rounds — 9 right, 3 wrong, 2 passed.
+14 rounds — 9 right, 1 hinted, 2 wrong, 2 passed.
 
 **Could not recall**
 - `cut to the chase` — get to the point, skipping the preamble (you said `spill the beans`)
 - `a blessing in disguise` — something bad that turns out well
+- `bite the bullet` — face something unpleasant you have been avoiding (needed a hint)
 - `up in arms` — passed
 
 **Shaky form**
