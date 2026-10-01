@@ -3,10 +3,15 @@
 A Claude Code skill that drills your Anki idioms in reverse: it describes a situation, you reply
 with an idiom that fits. It only uses idioms from cards you have already learned.
 
+## Requirements
+
+- [Claude Code](https://claude.com/claude-code)
+- Anki with the [AnkiConnect](https://ankiweb.net/shared/info/2055492159) add-on
+- Python 3
+
 ## Usage
 
-1. Open Anki with the [AnkiConnect](https://ankiweb.net/shared/info/2055492159) add-on installed,
-   and leave it running. Python 3 is the only other requirement.
+1. Open Anki and leave it running.
 2. Run `claude` in this directory and type `/practice-idiom`.
 3. Reply to each situation with an idiom, "hint" for one clue, or "pass".
 4. Say "stop" for a summary: right, hinted, wrong and passed counts, plus the idioms you could
