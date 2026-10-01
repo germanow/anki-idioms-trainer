@@ -1,6 +1,7 @@
 ---
 name: practice-idiom
 description: Drill the user's learned Anki idioms by presenting situations they must respond to with a fitting idiom. Use when the user wants to practice, train, or be quizzed on idioms, or invokes /practice-idiom. Judges whether their idiom fits the situation rather than whether it matches the hidden target.
+argument-hint: "[all|young]"
 ---
 
 # Idiom training
@@ -17,6 +18,16 @@ next situation:
 ```bash
 ./random_idiom.py -n 10
 ```
+
+The skill takes one optional argument that picks which cards to drill: `$ARGUMENTS`
+
+- empty or `all`: every learned card, using the command above.
+- `young`: only young cards (still in learning, or with an interval under 21 days). Add
+  `--young` to every fetch for the whole session: `./random_idiom.py -n 10 --young`.
+
+If the argument is anything else, say which values are accepted and stop.
+If a young batch returns fewer than ten idioms, work through what came back and then fetch
+again as usual. Repeats are fine with a small pool.
 
 If AnkiConnect is unreachable, tell the user to open Anki and stop. Do not fall back to idioms
 from memory — the point is to drill *their* deck.

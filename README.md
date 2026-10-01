@@ -51,6 +51,15 @@ output and you will not spoil yourself. Prompt suggestions are switched off for 
 `.claude/settings.json`, because the suggestion box will otherwise offer you the answer
 before you have typed anything.
 
+### Drilling only young cards
+
+`/practice-idiom` takes an optional argument that picks which cards the idioms come from:
+
+- `/practice-idiom` or `/practice-idiom all` — every learned card.
+- `/practice-idiom young` — only young cards: still in learning, or with an interval under 21
+  days. These are the idioms you met most recently, so they are the ones least likely to come
+  to you unprompted.
+
 ## random_idiom.py
 
 The skill's source of idioms, also usable on its own:
@@ -58,12 +67,14 @@ The skill's source of idioms, also usable on its own:
 ```bash
 ./random_idiom.py           # one random learned idiom
 ./random_idiom.py -n 10     # ten of them
+./random_idiom.py --young   # only young cards
 ```
 
-It prints a JSON list of `{phrase, definition, example}`. "Learned" means the card has left the
-new queue and is not suspended, regardless of due date. It expects notes with `Phrase/Idiom`,
-`Definition` and `Example` fields in the `Idioms and Phrases` deck, set as `DECK` at the top of
-the script.
+It prints a JSON list of `{phrase, definition}`. "Learned" means the card has left the new queue
+and is not suspended, regardless of due date. `--young` narrows that to cards still in learning
+or with an interval under 21 days, Anki's own cutoff between young and mature. It expects notes
+with `Phrase/Idiom` and `Definition` fields in the `Idioms and Phrases` deck, set as `DECK` at
+the top of the script.
 
 ## Rough edges
 

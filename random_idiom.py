@@ -2,6 +2,8 @@
 """Pull random learned idioms from the Anki "Idioms and Phrases" deck via AnkiConnect.
 
 "Learned" means the card has left the new queue and is not suspended.
+"Young" narrows that to cards still in learning or with an interval under 21 days,
+Anki's own cutoff between young and mature.
 Anki must be running with the AnkiConnect add-on installed.
 
 Prints a JSON list of {phrase, definition}.
@@ -9,6 +11,7 @@ Prints a JSON list of {phrase, definition}.
 Examples:
     ./random_idiom.py           # one random learned idiom
     ./random_idiom.py -n 10     # ten of them
+    ./random_idiom.py --young   # only young cards
 """
 
 import argparse
@@ -50,12 +53,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("-n", "--count", type=int, default=1, help="how many idioms to pull")
+    parser.add_argument("--young", action="store_true",
+                        help="only young cards (learning, or interval under 21 days)")
     args = parser.parse_args()
 
     query = f'deck:"{DECK}" -is:new -is:suspended'
+    if args.young:
+        query += " prop:ivl<21"
     card_ids = anki("findCards", query=query)
     if not card_ids:
-        sys.exit(f"No learned cards matched: {query}")
+        sys.exit(f"No cards matched: {query}")
     picked = random.sample(card_ids, min(args.count, len(card_ids)))
 
     idioms = []
