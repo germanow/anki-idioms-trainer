@@ -69,7 +69,8 @@ def build_query(mode):
     return f'deck:"{DECK}" -is:new -is:suspended' + MODES[mode]
 
 
-def random_idioms(query, count):
+def random_idioms(mode, count):
+    query = build_query(mode)
     card_ids = anki("findCards", query=query)
     if not card_ids:
         sys.exit(f"No cards matched: {query}")
@@ -87,7 +88,7 @@ def random_idioms(query, count):
 
 def main():
     args = parse_args()
-    idioms = random_idioms(build_query(args.mode), args.count)
+    idioms = random_idioms(args.mode, args.count)
     print(json.dumps(idioms, ensure_ascii=False, indent=2))
 
 
