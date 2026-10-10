@@ -1,7 +1,7 @@
 ---
 name: practice-idiom
 description: Drill the user's learned Anki idioms by presenting situations they must respond to with a fitting idiom. Use when the user wants to practice, train, or be quizzed on idioms, or invokes /practice-idiom. Judges whether their idiom fits the situation rather than whether it matches the hidden target.
-argument-hint: "[all|young]"
+argument-hint: "[all|young|today]"
 ---
 
 # Idiom training
@@ -25,9 +25,13 @@ The skill takes one optional argument that picks which cards to drill: `$ARGUMEN
 - `young`: only young cards (still in learning, or with an interval under 21 days). Add
   `--young` to every fetch for the whole session: `./random_idiom.py -n 10 --young`.
 
+- `today`: only cards first studied today or answered Again today. Add `--today` to every
+  fetch for the whole session: `./random_idiom.py -n 10 --today`.
+
 If the argument is anything else, say which values are accepted and stop.
-If a young batch returns fewer than ten idioms, work through what came back and then fetch
-again as usual. Repeats are fine with a small pool.
+If a young or today batch returns fewer than ten idioms, work through what came back and then
+fetch again as usual. Repeats are fine with a small pool. If a today fetch fails with "No cards
+matched", tell the user they have not learned or failed any idiom today and stop.
 
 If AnkiConnect is unreachable, tell the user to open Anki and stop. Do not fall back to idioms
 from memory — the point is to drill *their* deck.

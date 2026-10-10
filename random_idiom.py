@@ -4,6 +4,7 @@
 "Learned" means the card has left the new queue and is not suspended.
 "Young" narrows that to cards still in learning or with an interval under 21 days,
 Anki's own cutoff between young and mature.
+"Today" narrows it to cards first studied today or answered Again today.
 Anki must be running with the AnkiConnect add-on installed.
 
 Prints a JSON list of {phrase, definition}.
@@ -12,6 +13,7 @@ Examples:
     ./random_idiom.py           # one random learned idiom
     ./random_idiom.py -n 10     # ten of them
     ./random_idiom.py --young   # only young cards
+    ./random_idiom.py --today   # only cards learned or failed today
 """
 
 import argparse
@@ -55,11 +57,15 @@ def main():
     parser.add_argument("-n", "--count", type=int, default=1, help="how many idioms to pull")
     parser.add_argument("--young", action="store_true",
                         help="only young cards (learning, or interval under 21 days)")
+    parser.add_argument("--today", action="store_true",
+                        help="only cards first studied today or answered Again today")
     args = parser.parse_args()
 
     query = f'deck:"{DECK}" -is:new -is:suspended'
     if args.young:
         query += " prop:ivl<21"
+    if args.today:
+        query += " (introduced:1 OR rated:1:1)"
     card_ids = anki("findCards", query=query)
     if not card_ids:
         sys.exit(f"No cards matched: {query}")

@@ -33,7 +33,8 @@ Your friend has talked up a business plan for months but never started...
 
 Any idiom that fits the situation counts.
 
-`/practice-idiom young` limits the drill to young cards.
+`/practice-idiom young` limits the drill to young cards; `/practice-idiom today` to the idioms
+you learned or failed today.
 
 The skill gets its idioms from `random_idiom.py`; the deck and field names it expects are set at
 the top of that script.
