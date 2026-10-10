@@ -62,7 +62,10 @@ def parse_args():
     parser.add_argument("-n", "--count", type=int, default=1, help="how many idioms to pull")
     parser.add_argument("--mode", choices=MODES, default="all",
                         help="which learned cards to pull from (default: all)")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.count < 1:
+        parser.error("--count must be at least 1")
+    return args
 
 
 def build_query(mode):
