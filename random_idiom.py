@@ -51,7 +51,7 @@ def plain(value):
     return "\n".join(line.strip() for line in text.split("\n") if line.strip())
 
 
-def main():
+def parse_args():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("-n", "--count", type=int, default=1, help="how many idioms to pull")
@@ -59,17 +59,23 @@ def main():
                         help="only young cards (learning, or interval under 21 days)")
     parser.add_argument("--today", action="store_true",
                         help="only cards first studied today or answered Again today")
-    args = parser.parse_args()
+    return parser.parse_args()
 
+
+def build_query(young, today):
     query = f'deck:"{DECK}" -is:new -is:suspended'
-    if args.young:
+    if young:
         query += " prop:ivl<21"
-    if args.today:
+    if today:
         query += " (introduced:1 OR rated:1:1)"
+    return query
+
+
+def random_idioms(query, count):
     card_ids = anki("findCards", query=query)
     if not card_ids:
         sys.exit(f"No cards matched: {query}")
-    picked = random.sample(card_ids, min(args.count, len(card_ids)))
+    picked = random.sample(card_ids, min(count, len(card_ids)))
 
     idioms = []
     for card in anki("cardsInfo", cards=picked):
@@ -78,6 +84,12 @@ def main():
             "phrase": fields.get("Phrase/Idiom", ""),
             "definition": fields.get("Definition", ""),
         })
+    return idioms
+
+
+def main():
+    args = parse_args()
+    idioms = random_idioms(build_query(args.young, args.today), args.count)
     print(json.dumps(idioms, ensure_ascii=False, indent=2))
 
 
