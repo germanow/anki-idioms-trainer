@@ -55,10 +55,11 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("-n", "--count", type=int, default=1, help="how many idioms to pull")
-    parser.add_argument("--young", action="store_true",
-                        help="only young cards (learning, or interval under 21 days)")
-    parser.add_argument("--today", action="store_true",
-                        help="only cards first studied today or answered Again today")
+    scope = parser.add_mutually_exclusive_group()
+    scope.add_argument("--young", action="store_true",
+                       help="only young cards (learning, or interval under 21 days)")
+    scope.add_argument("--today", action="store_true",
+                       help="only cards first studied today or answered Again today")
     return parser.parse_args()
 
 
@@ -66,7 +67,7 @@ def build_query(young, today):
     query = f'deck:"{DECK}" -is:new -is:suspended'
     if young:
         query += " prop:ivl<21"
-    if today:
+    elif today:
         query += " (introduced:1 OR rated:1:1)"
     return query
 
