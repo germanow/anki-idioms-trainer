@@ -23,10 +23,10 @@ The skill takes one optional argument that picks which cards to drill: `$ARGUMEN
 
 - empty or `all`: every learned card, using the command above.
 - `young`: only young cards (still in learning, or with an interval under 21 days). Add
-  `--young` to every fetch for the whole session: `./random_idiom.py -n 10 --young`.
+  `--mode young` to every fetch for the whole session: `./random_idiom.py -n 10 --mode young`.
 
-- `today`: only cards first studied today or answered Again today. Add `--today` to every
-  fetch for the whole session: `./random_idiom.py -n 10 --today`.
+- `today`: only cards first studied today or answered Again today. Add `--mode today` to every
+  fetch for the whole session: `./random_idiom.py -n 10 --mode today`.
 
 If the argument is anything else, say which values are accepted and stop.
 If a young or today batch returns fewer than ten idioms, work through what came back and then

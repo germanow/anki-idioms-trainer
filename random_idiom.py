@@ -10,10 +10,10 @@ Anki must be running with the AnkiConnect add-on installed.
 Prints a JSON list of {phrase, definition}.
 
 Examples:
-    ./random_idiom.py           # one random learned idiom
-    ./random_idiom.py -n 10     # ten of them
-    ./random_idiom.py --young   # only young cards
-    ./random_idiom.py --today   # only cards learned or failed today
+    ./random_idiom.py                # one random learned idiom
+    ./random_idiom.py -n 10          # ten of them
+    ./random_idiom.py --mode young   # only young cards
+    ./random_idiom.py --mode today   # only cards learned or failed today
 """
 
 import argparse
@@ -27,6 +27,11 @@ import urllib.request
 
 ANKI_URL = "http://127.0.0.1:8765"
 DECK = "Idioms and Phrases"
+MODES = {
+    "all": "",
+    "young": " prop:ivl<21",
+    "today": " (introduced:1 OR rated:1:1)",
+}
 
 
 def anki(action, **params):
@@ -55,21 +60,13 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("-n", "--count", type=int, default=1, help="how many idioms to pull")
-    scope = parser.add_mutually_exclusive_group()
-    scope.add_argument("--young", action="store_true",
-                       help="only young cards (learning, or interval under 21 days)")
-    scope.add_argument("--today", action="store_true",
-                       help="only cards first studied today or answered Again today")
+    parser.add_argument("--mode", choices=MODES, default="all",
+                        help="which learned cards to pull from (default: all)")
     return parser.parse_args()
 
 
-def build_query(young, today):
-    query = f'deck:"{DECK}" -is:new -is:suspended'
-    if young:
-        query += " prop:ivl<21"
-    elif today:
-        query += " (introduced:1 OR rated:1:1)"
-    return query
+def build_query(mode):
+    return f'deck:"{DECK}" -is:new -is:suspended' + MODES[mode]
 
 
 def random_idioms(query, count):
@@ -90,7 +87,7 @@ def random_idioms(query, count):
 
 def main():
     args = parse_args()
-    idioms = random_idioms(build_query(args.young, args.today), args.count)
+    idioms = random_idioms(build_query(args.mode), args.count)
     print(json.dumps(idioms, ensure_ascii=False, indent=2))
 
 
