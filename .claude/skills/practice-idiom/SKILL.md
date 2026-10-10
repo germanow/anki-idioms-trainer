@@ -50,6 +50,10 @@ naturally answer — and stop. Do not state the idiom, its definition, its liter
 transparent near-synonym. The situation should make the *meaning* obvious while leaving the
 *wording* to the user.
 
+Drill the sense given in the card's `definition`, not another meaning the idiom can have: if
+the card for `go through the roof` says "become very angry", the situation is about anger, not
+about prices.
+
 Never number the rounds as if out of a fixed total, and keep each situation self-contained.
 
 ## Giving a hint
