@@ -12,8 +12,10 @@ from random_idiom import DECK, anki, plain
 
 def export(learned):
     query = f'deck:"{DECK}" -is:suspended ' + ("-is:new" if learned else "is:new")
-    cards = sorted(anki("cardsInfo", cards=anki("findCards", query=query)),
-                   key=lambda c: (c["due"], c["note"]))
+    cards = anki("cardsInfo", cards=anki("findCards", query=query))
+    tags = {n["noteId"]: n["tags"] for n in anki("notesInfo", notes=list({c["note"] for c in cards}))}
+    tier = lambda note: min((t for t in tags[note] if t.startswith("idiom::tier")), default="~")
+    cards.sort(key=lambda c: (tier(c["note"]), c["due"], c["note"]))
     for card in cards:
         fields = {name: plain(field["value"]) for name, field in card["fields"].items()}
         yield {"note_id": card["note"], "phrase": fields.get("Phrase/Idiom", ""),
