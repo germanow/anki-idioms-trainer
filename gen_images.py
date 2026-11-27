@@ -13,6 +13,7 @@ import urllib.parse
 import urllib.request
 
 COMFY_URL = os.environ.get("COMFY_URL", "http://192.168.0.31:8188")
+IMAGE_TIMEOUT = 120  # seconds to wait for one image before treating ComfyUI as stuck
 
 
 def comfy(path, body=None):
@@ -45,13 +46,28 @@ def workflow(prompt, seed):
 
 def render(prompt, seed):
     prompt_id = json.loads(comfy("/prompt", {"prompt": workflow(prompt, seed)}))["prompt_id"]
+    deadline = time.monotonic() + IMAGE_TIMEOUT
     while not (history := json.loads(comfy(f"/history/{prompt_id}"))).get(prompt_id):
+        if time.monotonic() > deadline:
+            raise TimeoutError(f"no image after {IMAGE_TIMEOUT}s")
         time.sleep(1)
     entry = history[prompt_id]
     if entry.get("status", {}).get("status_str") == "error":
         raise RuntimeError(f"ComfyUI failed: {entry['status']}")
     image = next(iter(entry["outputs"].values()))["images"][0]
     return comfy("/view?" + urllib.parse.urlencode(image))
+
+
+def retry(fn, *args, attempts=10, wait=60):
+    """Call fn, waiting and retrying on network errors so a short laptop outage doesn't end the run."""
+    for attempt in range(1, attempts + 1):
+        try:
+            return fn(*args)
+        except OSError as exc:
+            if attempt == attempts:
+                raise
+            print(f"  {exc}; retry {attempt}/{attempts - 1} in {wait}s", flush=True)
+            time.sleep(wait)
 
 
 def main():
@@ -67,7 +83,7 @@ def main():
             path = f"images/{note_id}.png"
             if os.path.exists(path):
                 continue
-            png = render(prompts[note_id], int(note_id) % 2**32)
+            png = retry(render, prompts[note_id], int(note_id) % 2**32)
             with open(path + ".tmp", "wb") as f:
                 f.write(png)
             os.replace(path + ".tmp", path)
@@ -76,7 +92,10 @@ def main():
             if done == limit:
                 break
     finally:
-        comfy("/free", {"unload_models": True, "free_memory": True})
+        try:
+            comfy("/free", {"unload_models": True, "free_memory": True})
+        except OSError:
+            pass
 
 
 if __name__ == "__main__":

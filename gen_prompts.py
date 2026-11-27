@@ -8,6 +8,7 @@ Env: OLLAMA_URL (default http://192.168.0.31:11434), OLLAMA_MODEL (default gemma
 import argparse
 import json
 import os
+import time
 import urllib.request
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://192.168.0.31:11434")
@@ -37,6 +38,18 @@ def scene(idiom):
     return reply["message"]["content"].strip()
 
 
+def retry(fn, *args, attempts=10, wait=60):
+    """Call fn, waiting and retrying on network errors so a short laptop outage doesn't end the run."""
+    for attempt in range(1, attempts + 1):
+        try:
+            return fn(*args)
+        except OSError as exc:
+            if attempt == attempts:
+                raise
+            print(f"  {exc}; retry {attempt}/{attempts - 1} in {wait}s", flush=True)
+            time.sleep(wait)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("-n", "--count", type=int, help="stop after this many new prompts")
@@ -49,7 +62,7 @@ def main():
             key = str(idiom["note_id"])
             if prompts.get(key):
                 continue
-            prompts[key] = scene(idiom)
+            prompts[key] = retry(scene, idiom)
             with open("prompts.json.tmp", "w") as f:
                 json.dump(prompts, f, ensure_ascii=False, indent=2)
             os.replace("prompts.json.tmp", "prompts.json")
@@ -58,7 +71,10 @@ def main():
             if done == limit:
                 break
     finally:
-        ollama("/api/generate", {"model": MODEL, "keep_alive": 0})
+        try:
+            ollama("/api/generate", {"model": MODEL, "keep_alive": 0})
+        except OSError:
+            pass
 
 
 if __name__ == "__main__":

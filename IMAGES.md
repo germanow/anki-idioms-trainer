@@ -81,6 +81,8 @@ has produced so far, so they can be run in any mix, e.g. 100 prompts, 50 images,
 ```
 
 - Without `-n` each runs until everything available is done; Ctrl+C stops safely, rerun to resume.
+- If the laptop drops out, steps 1–2 retry every 60 s (10 attempts) and treat an image taking
+  over 2 min as stuck; after that they exit and a rerun resumes.
 - `gen_images.py` reads `prompts.json` once at start; rerun it to pick up prompts added later.
   Run prompts and images one after the other, not together: they share 12 GB of VRAM.
 - For long runs: `nohup ./gen_prompts.py > prompts.log 2>&1 &`.
