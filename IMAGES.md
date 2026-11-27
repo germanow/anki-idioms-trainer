@@ -56,7 +56,7 @@ Order: not-yet-learned (new) cards first, then learned. Suspended cards are skip
    after every idiom. Unload the model at the end (`keep_alive: 0`).
 2. **Images** (ComfyUI, Klein 4B): go idiom by idiom through the saved prompts and save each
    image in this repo, skipping ones that already exist. Free ComfyUI at the end (`POST /free`).
-3. **Shrink**: convert each image to a 512 px JPEG (~60 KB instead of ~1.5 MB, ~250 MB for the
+3. **Shrink**: convert each image to a 512 px JPEG (~100 KB instead of ~1.5 MB, ~400 MB for the
    whole deck instead of ~5.5 GB), skipping ones already converted.
 4. **Attach**: upload each shrunk image to Anki with AnkiConnect `storeMediaFile` and set an `Image`
    field (`<img src="…">`) on the note, skipping notes that already have one. Add the field to
@@ -72,7 +72,7 @@ has produced so far, so they can be run in any mix, e.g. 100 prompts, 50 images,
 | 0 | `export_idioms.py` | Anki | `idioms.json` |
 | 1 | `gen_prompts.py` | `idioms.json` | `prompts.json` (`{note_id: scene}`) |
 | 2 | `gen_images.py` | `prompts.json` | `images/<note_id>.png` |
-| 3 | `shrink_images.py` | `images/` | `small/<note_id>.jpg` (512 px JPEG, ~60 KB) |
+| 3 | `shrink_images.py` | `images/` | `small/<note_id>.jpg` (512 px JPEG, ~100 KB) |
 | 4 | `attach_images.py` | `small/` | Anki `Image` field, `attached.json` (attached note IDs) |
 
 ## Running
@@ -80,7 +80,7 @@ has produced so far, so they can be run in any mix, e.g. 100 prompts, 50 images,
 ```
 ./gen_prompts.py      # laptop on, Ollama running; ~2 h for all
 ./gen_images.py       # laptop on, ComfyUI running; ~3 h for all
-./shrink_images.py    # macOS sips; images ~1.5 MB → ~60 KB
+./shrink_images.py    # macOS sips; images ~1.5 MB → ~100 KB
 ./attach_images.py    # Anki open
 ```
 
