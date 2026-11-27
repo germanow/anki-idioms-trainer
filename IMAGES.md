@@ -61,3 +61,29 @@ Order: not-yet-learned (new) cards first, then learned. Suspended cards are skip
    the note type and card template first, and back up the collection.
 
 Each saved record is keyed by note ID, so the steps line up even if the deck changes.
+
+Scripts (each takes `-n N` to stop after N new items; each works only on what the previous step
+has produced so far, so they can be run in any mix, e.g. 100 prompts, 50 images, attach, more):
+
+| Step | Script | Reads | Writes |
+|---|---|---|---|
+| 0 | `export_idioms.py` | Anki | `idioms.json` |
+| 1 | `gen_prompts.py` | `idioms.json` | `prompts.json` (`{note_id: scene}`) |
+| 2 | `gen_images.py` | `prompts.json` | `images/<note_id>.png` |
+| 3 | `attach_images.py` | `images/` | Anki `Image` field, `attached.json` (attached note IDs) |
+
+## Running
+
+```
+./gen_prompts.py      # laptop on, Ollama running; ~2 h for all
+./gen_images.py       # laptop on, ComfyUI running; ~3 h for all
+./attach_images.py    # Anki open
+```
+
+- Without `-n` each runs until everything available is done; Ctrl+C stops safely, rerun to resume.
+- `gen_images.py` reads `prompts.json` once at start; rerun it to pick up prompts added later.
+  Run prompts and images one after the other, not together: they share 12 GB of VRAM.
+- For long runs: `nohup ./gen_prompts.py > prompts.log 2>&1 &`.
+- Rerun `./export_idioms.py` (Anki open) only when the deck changes.
+- Before the first attach: back up the collection, add an `Image` field to the note type and
+  `{{Image}}` to the card template.

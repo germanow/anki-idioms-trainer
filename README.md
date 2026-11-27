@@ -43,3 +43,5 @@ the top of that script.
 
 - A long session can repeat an idiom; nothing tracks what you have been asked.
 - The summary covers the current session only; there is no history across sessions.
+
+To add cartoon images to the cards, see [IMAGES.md](IMAGES.md).
